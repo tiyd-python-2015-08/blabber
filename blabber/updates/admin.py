@@ -3,8 +3,12 @@ from .models import Status, Favorite
 
 
 class StatusAdmin(admin.ModelAdmin):
-    list_display = ['user', 'text', 'posted_at']
+    list_display = ['user', 'text', 'posted_at', 'favorite_count']
+
+
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ['user', 'status']
 
 # Register your models here.
 admin.site.register(Status, StatusAdmin)
-admin.site.register(Favorite)
+admin.site.register(Favorite, FavoriteAdmin)
