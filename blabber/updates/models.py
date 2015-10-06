@@ -9,3 +9,8 @@ class Status(models.Model):
     text = models.CharField(max_length=141)
     posted_at = models.DateTimeField()
     user = models.ForeignKey(User)
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User)
+    status = models.ForeignKey(Status)
