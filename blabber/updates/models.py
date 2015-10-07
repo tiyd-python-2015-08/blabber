@@ -26,3 +26,38 @@ class Favorite(models.Model):
 
     def __str__(self):
         return '@{} <3 {}'.format(self.user, self.status)
+
+
+def load_fake_data():
+    '''Create some fake users and statuses'''
+
+    from faker import Faker
+    import random
+
+    fake = Faker()
+
+    Favorite.objects.all().delete()
+    Status.objects.all().delete()
+    User.objects.exclude(username='admin').delete()
+
+    users = []
+    statuses = []
+
+    for _ in range(50):
+        new_user = User(username=fake.user_name(),
+                        email=fake.email(),
+                        password=fake.password())
+        new_user.save()
+        users.append(new_user)
+
+    for _ in range(1000):
+        new_status = Status(user=random.choice(users),
+                            posted_at=fake.date_time_this_year(),
+                            text=fake.text(max_nb_chars=141))
+        new_status.save()
+        statuses.append(new_status)
+
+    for _ in range(4000):
+        favorite = Favorite(user=random.choice(users),
+                            status=random.choice(statuses))
+        favorite.save()
