@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.utils import IntegrityError
 
 # Create your models here.
 
 
 class Status(models.Model):
+
     class Meta:
         verbose_name_plural = 'statuses'
 
@@ -23,6 +25,9 @@ class Status(models.Model):
 class Favorite(models.Model):
     user = models.ForeignKey(User)
     status = models.ForeignKey(Status)
+
+    class Meta:
+        unique_together = ('user', 'status')
 
     def __str__(self):
         return '@{} <3 {}'.format(self.user, self.status)
@@ -58,6 +63,9 @@ def load_fake_data():
         statuses.append(new_status)
 
     for _ in range(4000):
-        favorite = Favorite(user=random.choice(users),
-                            status=random.choice(statuses))
-        favorite.save()
+        try:
+            favorite = Favorite(user=random.choice(users),
+                                status=random.choice(statuses))
+            favorite.save()
+        except IntegrityError:
+            continue
