@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
   {% for status in statuses %}
-    <p><b>{{ status.user }}</b> -- {{ status.text }} <small>({{ status.posted_at }})</small></p>
+    <p><b><a href="{% url 'user_detail' status.user.pk %}">{{ status.user }}</a></b> -- {{ status.text }} <small>({{ status.posted_at }})</small></p>
   {% endfor %}
 {% endblock %}
