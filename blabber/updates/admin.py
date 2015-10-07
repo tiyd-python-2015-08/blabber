@@ -3,7 +3,7 @@ from .models import Status, Favorite
 
 
 class StatusAdmin(admin.ModelAdmin):
-    list_display = ['user', 'text', 'posted_at', 'favorite_count']
+    list_display = ['user', 'text', 'posted_at']
 
 
 class FavoriteAdmin(admin.ModelAdmin):
