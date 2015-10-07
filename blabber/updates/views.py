@@ -14,4 +14,7 @@ def all_statuses(request):
 def recent_statuses(request):
     statuses = Status.objects.order_by('-posted_at')[:20]
     status_strings = [str(status) for status in statuses]
-    return HttpResponse('<br>'.join(status_strings))
+    # return HttpResponse('<br>'.join(status_strings))
+    return render(request,
+                  'updates/statuses.html',
+                  {'statuses': status_strings})
