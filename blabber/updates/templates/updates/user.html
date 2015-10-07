@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Blabber</title>
-</head>
-<body>
-  <h1>Blabber!</h1>
+{% extends "base.html" %}
+{% block content %}
   <h2>{{ user.username }}</h2>
   {% for status in statuses %}
     <p>{{ status.text }} <small>({{ status.posted_at }})</small></p>
   {% endfor %}
-</body>
-</html>
+{% endblock %}
