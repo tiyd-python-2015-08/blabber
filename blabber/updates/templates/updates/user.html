@@ -5,9 +5,9 @@
 </head>
 <body>
   <h1>Blabber!</h1>
-  <h2>Statuses</h2>
+  <h2>{{ user.username }}</h2>
   {% for status in statuses %}
-    <p><b>{{ status.user }}</b> -- {{ status.text }} <small>({{ status.posted_at }})</small></p>
+    <p>{{ status.text }} <small>({{ status.posted_at }})</small></p>
   {% endfor %}
 </body>
 </html>
