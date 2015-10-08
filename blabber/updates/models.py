@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 
+from users.models import Profile
+
 # Create your models here.
 
 
@@ -50,9 +52,11 @@ def load_fake_data():
 
     for _ in range(50):
         new_user = User(username=fake.user_name(),
-                        email=fake.email(),
-                        password=fake.password())
+                        email=fake.email())
+        new_user.set_password('password')
         new_user.save()
+        profile = Profile(user=new_user, favorite_color='blue')
+        profile.save()
         users.append(new_user)
 
     for _ in range(1000):
