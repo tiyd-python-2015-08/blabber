@@ -16,11 +16,13 @@ class Status(models.Model):
     posted_at = models.DateTimeField()
     user = models.ForeignKey(User)
 
+    favorited_users = models.ManyToManyField(User, through='Favorite', related_name='favorited_updates')
+
     def favorite_count(self):
         return self.favorite_set.count()
 
-    def favorited_users(self):
-        return [favorite.user for favorite in self.favorite_set.all()]
+    # def favorited_users(self):
+    #     return [favorite.user for favorite in self.favorite_set.all()]
 
     def __str__(self):
         return '@{}: {}'.format(self.user, self.text)
