@@ -21,6 +21,7 @@ from profiles import views as profiles_views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^register/$', profiles_views.user_register, name='user_register'),
-    url(r'^', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^', include('updates.urls')),
+    url(r'^profile/', include('profiles.urls')),
 ]

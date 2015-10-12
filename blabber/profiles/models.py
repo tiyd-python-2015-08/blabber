@@ -6,4 +6,6 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True)
-    favorite_color = models.CharField(max_length=50)
+    favorite_color = models.CharField(max_length=50, null=True, blank=True)
+    bio = models.TextField(null=True, blank=True)
+    web_address = models.URLField(null=True, blank=True)
