@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -27,7 +27,7 @@ def recent_statuses(request):
 
 
 def status_detail(request, status_id):
-    status = Status.objects.get(pk=status_id)
+    status = get_object_or_404(Status, pk=status_id)
 
     return render(request, 'updates/status_detail.html', {'status': status})
 
