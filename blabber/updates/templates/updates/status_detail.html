@@ -5,6 +5,11 @@
 
 <p>--<a href="{% url 'user_detail' status.user.pk %}">{{ status.user }}</a> ({{ status.posted_at }})
 
+<br>
+<a href="{% url 'add_favorite' status.pk %}">Favorite this!</a><br>
+<a href="{% url 'remove_favorite' status.pk %}">Unfavorite this!</a><br>
+
+<br><br>
 Favorited by:
 <ul>
 {% for favorite in status.favorite_set.all %}

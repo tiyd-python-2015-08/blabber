@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from .models import Status, User
+from .models import Status, User, Favorite
 from .forms import StatusForm
 
 # Create your views here.
@@ -65,3 +65,18 @@ def new_status(request):
         form = StatusForm()
 
     return render(request, 'updates/new.html', {'form': form})
+
+
+@login_required
+def add_favorite(request, status_id):
+    status = get_object_or_404(Status, pk=status_id)
+    if not status.favorite_set.filter(user=request.user).exists():
+        status.favorite_set.create(user=request.user)
+    return redirect('status_detail', status_id)
+
+
+@login_required
+def remove_favorite(request, status_id):
+    status = get_object_or_404(Status, pk=status_id)
+    status.favorite_set.filter(user=request.user).delete()
+    return redirect('status_detail', status_id)
