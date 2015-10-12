@@ -26,6 +26,12 @@ def recent_statuses(request):
                   {'statuses': statuses})
 
 
+def status_detail(request, status_id):
+    status = Status.objects.get(pk=status_id)
+
+    return render(request, 'updates/status_detail.html', {'status': status})
+
+
 def show_user(request, user_id):
     user = User.objects.get(pk=user_id)
     statuses = user.status_set.all().order_by('-posted_at')

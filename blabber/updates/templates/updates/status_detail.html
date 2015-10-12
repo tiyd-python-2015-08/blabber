@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>{{ status.text }}</p>
+
+<p>--<a href="{% url 'user_detail' status.user.pk %}">{{ status.user }}</a> ({{ status.posted_at }})
+
+Favorited by:
+<ul>
+{% for favorite in status.favorite_set.all %}
+  <li><a href="{% url 'user_detail' favorite.user.pk %}">{{ favorite.user }}</a></li>
+{% endfor %}
+</ul>
+</p>
+{% endblock %}
