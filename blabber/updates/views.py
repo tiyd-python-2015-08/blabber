@@ -1,6 +1,12 @@
-from django.shortcuts import render
+from datetime import datetime
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+
 from .models import Status, User
+from .forms import StatusForm
 
 # Create your views here.
 
@@ -33,3 +39,23 @@ def show_user(request, user_id):
 def show_user_by_username(request, username):
     user_id = User.objects.get(username=username).id
     return show_user(request, user_id=user_id)
+
+
+@login_required
+def new_status(request):
+    if request.method == 'POST':
+        form = StatusForm(request.POST)
+        if form.is_valid():
+            status = form.save(commit=False)
+            status.user = request.user
+            status.posted_at = datetime.now()
+            status.save()
+
+            messages.add_message(request, messages.SUCCESS,
+                                 "Your status has been posted!")
+
+            return redirect('recent_statuses')
+    else:
+        form = StatusForm()
+
+    return render(request, 'updates/new.html', {'form': form})
