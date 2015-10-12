@@ -15,4 +15,4 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('favorite_color', 'bio', 'web_address')
+        fields = ('favorite_color', 'bio', 'web_address', 'twitter_username')
