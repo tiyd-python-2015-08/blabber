@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>{{ status.text }}</p>
+
+<p>--<a href="{% url 'user_detail' status.user.pk %}">{{ status.user }}</a> ({{ status.posted_at }})
+
+<br>
+{% if user in status.favorited_users.all %}
+<a href="{% url 'remove_favorite' status.pk %}">Unfavorite this!</a><br>
+{% else %}
+<a href="{% url 'add_favorite' status.pk %}">Favorite this!</a><br>
+{% endif %}
+
+<br><br>
+Favorited by:
+<ul>
+{% for favorite in status.favorite_set.all %}
+  <li><a href="{% url 'user_detail' favorite.user.pk %}">{{ favorite.user }}</a></li>
+{% endfor %}
+</ul>
+</p>
+{% endblock %}

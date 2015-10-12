@@ -16,7 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from profiles import views as profiles_views
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^u/', include('updates.urls'))
+    url(r'^register/$', profiles_views.user_register, name='user_register'),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^', include('updates.urls')),
+    url(r'^profile/', include('profiles.urls')),
 ]
