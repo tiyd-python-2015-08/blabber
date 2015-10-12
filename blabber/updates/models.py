@@ -19,6 +19,9 @@ class Status(models.Model):
     def favorite_count(self):
         return self.favorite_set.count()
 
+    def favorited_users(self):
+        return [favorite.user for favorite in self.favorite_set.all()]
+
     def __str__(self):
         return '@{}: {}'.format(self.user, self.text)
 
