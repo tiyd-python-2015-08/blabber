@@ -20,7 +20,9 @@ from users import views as user_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^login/$', user_views.user_login, name='user_login'),
+    # url(r'^login/$', user_views.user_login, name='user_login'),
+    # url(r'^logout/$', user_views.user_logout, name='user_logout'),
     url(r'^register/$', user_views.user_register, name='user_register'),
-    url(r'^', include('updates.urls'))
+    url(r'^', include('django.contrib.auth.urls')),
+    url(r'^', include('updates.urls')),
 ]

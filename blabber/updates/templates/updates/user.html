@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>{{ user.username }}</h2>
+  <h2>{{ blabuser.username }}</h2>
   {% for status in statuses %}
     <p>{{ status.text }} <small>({{ status.posted_at }})</small></p>
   {% endfor %}

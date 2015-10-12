@@ -26,7 +26,7 @@ def show_user(request, user_id):
 
     return render(request,
                   'updates/user.html',
-                  {'user': user,
+                  {'blabuser': user,
                    'statuses': statuses})
 
 
