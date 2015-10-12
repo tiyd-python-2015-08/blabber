@@ -19,3 +19,7 @@ class Profile(models.Model):
     web_address = models.URLField(null=True, blank=True)
     twitter_username = models.CharField(max_length=16, null=True, blank=True,
                                         validators=[RegexValidator(r'@\w+', message='Twitter names must be composed of alphanumeric characters')])
+    following = models.ManyToManyField('Profile', related_name='followers')
+
+    def __str__(self):
+        return str(self.user)
