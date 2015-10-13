@@ -18,7 +18,7 @@ def all_statuses(request):
 
 
 def recent_statuses(request):
-    if request.user:
+    if request.user.is_authenticated():
         statuses = Status.objects.filter(
             user__profile__in=request.user.profile.following.all())
         statuses = statuses.order_by('-posted_at')[:20]
@@ -26,6 +26,10 @@ def recent_statuses(request):
         statuses = Status.objects.order_by('-posted_at')[:20]
     # status_strings = [str(status) for status in statuses]
     # return HttpResponse('<br>'.join(status_strings))
+
+    # statuses = statuses.select_related('user')
+    statuses = statuses.prefetch_related('user')
+
     return render(request,
                   'updates/statuses.html',
                   {'statuses': statuses})

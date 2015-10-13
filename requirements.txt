@@ -3,3 +3,4 @@ fake-factory
 django-debug-toolbar
 django-extensions
 werkzeug
+psycopg2
