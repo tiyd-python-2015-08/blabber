@@ -18,6 +18,7 @@ def all_statuses(request):
 
 
 def recent_statuses(request):
+    messages.add_message(request, messages.SUCCESS, 'I think you are looking for this')
     if request.user.is_authenticated():
         statuses = Status.objects.filter(
             user__profile__in=request.user.profile.following.all())
