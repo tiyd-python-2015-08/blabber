@@ -1,9 +1,30 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
 <!DOCTYPE html>
 <html>
 <head>
   <title>Blabber</title>
+  {% bootstrap_css %}
+  {% bootstrap_javascript jquery=True %}
+  <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
 </head>
 <body>
+  <div class="container">
+    <div class="header clearfix">
+      <nav>
+        <ul class="nav nav-pills pull-right">
+          <li role="presentation" class="active"><a href="#">Recent</a></li>
+          <li role="presentation"><a href="#">All Statuses</a></li>
+          <li role="presentation"><a href="#">Login</a></li>
+        </ul>
+      </nav>
+      <h3 class="text-muted"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>Blabber</h3>
+    </div>
+
+
+
+
+
   <div style="float: right;">
     {% if user.is_authenticated %}
     Logged in as {{ user.username }} - <a href="{% url 'new_status' %}">Post a status</a>
@@ -13,15 +34,10 @@
     {% endif %}
   </div>
   <h1><a href="/">Blabber!</a></h1>
-  {% if messages %}
-  <ul class="messages">
-      {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-      {% endfor %}
-  </ul>
-  {% endif %}
+  {% bootstrap_messages %}
   {% block content %}
   {% endblock %}
   <footer>Created in TIY Durham Python Cohort 5. Boom!</footer>
+</div>
 </body>
 </html>

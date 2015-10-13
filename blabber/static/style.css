@@ -1,0 +1,22 @@
+body {
+  font-family: sans-serif;
+}
+.featured-jumbo {
+  position: relative;
+  background: none;
+}
+
+.featured-jumbo::after {
+  content: "";
+  border-radius: 8px;
+  opacity: 0.2;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+
+  background-size: cover;
+  background-image: url(http://www.hiltonhawaiianvillage.com/assets/img/discover/oahu-island-activities/HHV_Oahu-island-activities_Content_Beaches_455x248_x2.jpg);
+}
