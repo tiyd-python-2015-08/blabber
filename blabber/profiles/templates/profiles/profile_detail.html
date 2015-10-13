@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ profile.user.username }}</h2>
+
+{% if user == profile.user %}
+<p><a href="{% url "edit_profile" %}">Edit profile</a></p>
+{% endif %}
+
+<p><b>Favorite color:</b> <span style="color: {{ profile.favorite_color }};">{{ profile.favorite_color }}</span></p>
+{% if profile.bio %}
+<p>{{ profile.bio }}</p>
+{% endif %}
+{% endblock %}

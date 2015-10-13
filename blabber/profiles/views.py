@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import Http404
 
 
 from .models import Profile
@@ -59,3 +60,15 @@ def edit_profile(request):
             messages.add_message(request, messages.SUCCESS, 'Your profile has been updated')
 
     return render(request, 'profiles/edit_profile.html', {'form': profile_form})
+
+
+def profile_detail(request, profile_id=None, profile_username=None):
+    if profile_id:
+        profile = get_object_or_404(Profile, pk=profile_id)
+    elif profile_username:
+        profile = get_object_or_404(Profile, user__username=profile_username)
+    else:
+        raise Http404("You must specify a user")
+
+    return render(request, 'profiles/profile_detail.html',
+                  {'profile': profile})
