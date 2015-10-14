@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  HELLO!!?!?!?
+  <h2>{{ profile.user.username }}</h2>
+  Status set: [{{ profile.user.status_set }}]
+  {% for status in profile.user.status_set.all %}
+    <p>{{ status }} <small>({{ status.posted_at }})</small></p>
+  {% endfor %}
+{% endblock %}

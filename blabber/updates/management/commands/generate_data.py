@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
-from updates.models import Favorite, Status
-from profiles.models import Profile
+from django.utils.timezone import make_aware
+from updates.models import Favorite, Status, Profile
+# from profiles.models import Profile
 from django.contrib.auth.models import User
 from faker import Faker
 from django.db.utils import IntegrityError
@@ -14,7 +15,10 @@ class Command(BaseCommand):
 
         Favorite.objects.all().delete()
         Status.objects.all().delete()
-        User.objects.exclude(username='admin').delete()
+        Profile.objects.all().delete()
+        User.objects.all().delete()
+
+        User.objects.create_superuser(username='admin', password='password', email='')
 
         users = []
         statuses = []
@@ -30,7 +34,7 @@ class Command(BaseCommand):
 
         for _ in range(1000):
             new_status = Status(user=random.choice(users),
-                                posted_at=fake.date_time_this_year(),
+                                posted_at=make_aware(fake.date_time_this_year()),
                                 text=fake.text(max_nb_chars=141))
             new_status.save()
             statuses.append(new_status)

@@ -40,7 +40,6 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'bootstrap3',
     'updates',
-    'profiles',
 )
 
 MIDDLEWARE_CLASSES = (

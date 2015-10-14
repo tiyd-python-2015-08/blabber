@@ -5,10 +5,10 @@
 
   Here {{ statuses|length|pluralize:"is,are"}} {{ statuses|length }} status{{ statuses|length|pluralize:"es" }}:
   {% for status in statuses %}
-    <p><b><a href="{% url 'user_detail' status.user.pk %}">{{ status.user }}</a></b> -- {{ status.text }} <small>({{ status.posted_at }})</small></p>
+    <p>#{{ page_obj.start_index|add:forloop.counter0 }}: <b><a href="{% url 'user_detail' status.user.pk %}">{{ status.user }}</a></b> -- {{ status.text }} <small>({{ status.posted_at }})</small></p>
   {% endfor %}
 
-{% bootstrap_pagination statuses pages_to_show=5%}
+{% bootstrap_pagination page_obj pages_to_show=5%}
 {% endblock %}
 
 {% block title %}{{ block.super }} - Latest updates{% endblock %}

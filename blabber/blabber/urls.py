@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^register/$', profiles_views.user_register, name='user_register'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^', include('updates.urls')),
-    url(r'^profile/', include('profiles.urls')),
+    # url(r'^profile/', include('profiles.urls')),
     url(r'^about/', TemplateView.as_view(template_name='updates/about.html'), name='about'),
-    url(r'^aboutus/', RedirectView.as_view(url=reverse_lazy('about'))),
+    url(r'^aboutus/', RedirectView.as_view(url=reverse_lazy('about'), permanent=True)),
 ]

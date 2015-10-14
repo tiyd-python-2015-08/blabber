@@ -5,8 +5,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.views import generic
 
-from .models import Status, User, Favorite
+from .models import Status, Favorite, Profile
 from .forms import StatusForm
 
 # Create your views here.
@@ -18,40 +19,54 @@ def all_statuses(request):
     return HttpResponse('<br>'.join(status_strings))
 
 
-def recent_statuses(request):
-    if request.user.is_authenticated():
-        statuses = Status.objects.filter(
-            user__profile__in=request.user.profile.following.all())
-        statuses = statuses.order_by('-posted_at')
-    else:
-        statuses = Status.objects.order_by('-posted_at')
-    # status_strings = [str(status) for status in statuses]
-    # return HttpResponse('<br>'.join(status_strings))
+class IndexView(generic.ListView):
+    template_name = 'updates/statuses.html'
+    context_object_name = 'statuses'
+    paginate_by = 10
 
-    # statuses = statuses.select_related('user')
-    statuses = statuses.prefetch_related('user')
+    def get_queryset(self):
+        return Status.objects.order_by('-posted_at').prefetch_related('user')
 
-    paginator = Paginator(statuses, 20)
 
-    page = request.GET.get('page')
-    try:
-        statuses = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        statuses = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        statuses = paginator.page(paginator.num_pages)
-
-    return render(request,
-                  'updates/statuses.html',
-                  {'statuses': statuses})
+# def recent_statuses(request):
+#     if request.user.is_authenticated():
+#         statuses = Status.objects.filter(
+#             user__profile__in=request.user.profile.following.all())
+#         statuses = statuses.order_by('-posted_at')
+#     else:
+#         statuses = Status.objects.order_by('-posted_at')
+#     # status_strings = [str(status) for status in statuses]
+#     # return HttpResponse('<br>'.join(status_strings))
+#
+#     # statuses = statuses.select_related('user')
+#     statuses = statuses.prefetch_related('user')
+#
+#     paginator = Paginator(statuses, 20)
+#
+#     page = request.GET.get('page')
+#     try:
+#         statuses = paginator.page(page)
+#     except PageNotAnInteger:
+#         # If page is not an integer, deliver first page.
+#         statuses = paginator.page(1)
+#     except EmptyPage:
+#         # If page is out of range (e.g. 9999), deliver last page of results.
+#         statuses = paginator.page(paginator.num_pages)
+#
+#     return render(request,
+#                   'updates/statuses.html',
+#                   {'statuses': statuses})
 
 
 def status_detail(request, status_id):
     status = get_object_or_404(Status, pk=status_id)
 
     return render(request, 'updates/status_detail.html', {'status': status})
+
+
+class ProfileDetailView(generic.DetailView):
+    model = Profile
+    template_name = 'updates/profile_detail.html'
 
 
 def show_user(request, user_id):
