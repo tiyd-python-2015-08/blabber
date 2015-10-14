@@ -3,10 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Blabber</title>
+  <title>{% block title %}Blabber{% endblock %}</title>
   {% bootstrap_css %}
   {% bootstrap_javascript jquery=True %}
   <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+  {% block extra_css %}{% endblock %}
 </head>
 <body>
   <div class="container">
