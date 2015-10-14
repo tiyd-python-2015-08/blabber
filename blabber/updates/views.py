@@ -67,6 +67,23 @@ def status_detail(request, status_id):
 class ProfileDetailView(generic.DetailView):
     model = Profile
     template_name = 'updates/profile_detail.html'
+    paginate_by = 10
+
+
+def set_fave_color(request, color):
+    request.session['favorite_color'] = color
+    return redirect('fun')
+
+
+
+def request_fun(request):
+    return render(request, 'updates/fun.html', {'data': {
+        'request': request,
+        'path': request.path,
+        'COOKIES': request.COOKIES,
+        'session': request.session.items(),
+        'server': request.get_host(),
+    }})
 
 
 def show_user(request, user_id):
