@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
@@ -18,18 +19,29 @@ def all_statuses(request):
 
 
 def recent_statuses(request):
-    messages.add_message(request, messages.SUCCESS, 'I think you are looking for this')
     if request.user.is_authenticated():
         statuses = Status.objects.filter(
             user__profile__in=request.user.profile.following.all())
-        statuses = statuses.order_by('-posted_at')[:20]
+        statuses = statuses.order_by('-posted_at')
     else:
-        statuses = Status.objects.order_by('-posted_at')[:20]
+        statuses = Status.objects.order_by('-posted_at')
     # status_strings = [str(status) for status in statuses]
     # return HttpResponse('<br>'.join(status_strings))
 
     # statuses = statuses.select_related('user')
     statuses = statuses.prefetch_related('user')
+
+    paginator = Paginator(statuses, 20)
+
+    page = request.GET.get('page')
+    try:
+        statuses = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        statuses = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        statuses = paginator.page(paginator.num_pages)
 
     return render(request,
                   'updates/statuses.html',

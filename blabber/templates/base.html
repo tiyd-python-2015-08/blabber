@@ -14,9 +14,9 @@
     <div class="header clearfix">
       <nav>
         <ul class="nav nav-pills pull-right">
-          <li role="presentation" class="active"><a href="#">Recent</a></li>
-          <li role="presentation"><a href="#">All Statuses</a></li>
-          <li role="presentation"><a href="#">Login</a></li>
+          <li role="presentation"><a href="{% url "about" %}">About</a></li>
+          <li role="presentation"><a href="{% url "recent_statuses" %}">Recent</a></li>
+          <li role="presentation"><a href="{% url "all_statuses" %}">All Statuses</a></li>
         </ul>
       </nav>
       <h3 class="text-muted"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>Blabber</h3>

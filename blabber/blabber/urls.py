@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
+from django.core.urlresolvers import reverse_lazy
 
 from profiles import views as profiles_views
 
@@ -24,4 +27,6 @@ urlpatterns = [
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^', include('updates.urls')),
     url(r'^profile/', include('profiles.urls')),
+    url(r'^about/', TemplateView.as_view(template_name='updates/about.html'), name='about'),
+    url(r'^aboutus/', RedirectView.as_view(url=reverse_lazy('about'))),
 ]
